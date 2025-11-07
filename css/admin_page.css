@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: #ffffff;
+    color: #333;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: #00425a;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar-top {
+    display: flex;
+    align-items: center;
+    padding: 18px;
+    gap: 10px;
+}
+
+.sidebar-logo.hidden {
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    display: none;
+}
+
+.sidebar-logo {
+    height: 70px;
+    transition: all 0.3s ease;
+    margin-left: 0;
+}
+
+.sidebar:not(.collapsed) .sidebar-logo {
+    margin-left: 10px;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding-left: 0;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.menu li:hover, .menu li.active {
+    background-color: #0077a6;
+}
+
+.menu li .icon {
+    margin-right: 10px;
+}
+
+.sidebar.collapsed {
+    width: 60px;
+}
+
+.sidebar.collapsed .label {
+    display: none;
+}
+
+.sidebar.collapsed ~ .logo-topbar img {
+    left: 60px;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.collapse-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+/* Main */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 0 20px;
+    height: 60px;
+    background: #f1f1f1;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logo-topbar img {
+    height: 50px;
+    margin-right: 20px; 
+}
+
+.login {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #00425a;
+    z-index: 1001;
+}
+
+.login-btn {
+    background-color: transparent;
+    border: 1px solid #00425a;
+    color: #00425a;
+    border-radius: 6px;
+    padding: 8px 12px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #00425a;
+    color: #fff;
+}
+
+.welcome-msg {
+    font-weight: bold;
+}
+
+/* Content */
+.admin-main {
+    text-align: center;
+    padding: 2rem;
+}
+
+.admin-main h2 {
+    margin-bottom: 3rem;
+}
+
+/* Division Cards */
+.division-container {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.division-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 1rem;
+    width: 200px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.division-card:hover:not(.disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.division-card.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.division-card img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 0.5rem;
+}
+
+.division-card h3 {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: absolute;
+        z-index: 1000;
+        height: 100%;
+    }
+    .division-card img {
+        width: 100px;
+    }
+}

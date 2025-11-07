@@ -1,0 +1,703 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #ffffff;
+  color: #333;
+  display: flex;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ===================== */
+/* Topbar */
+/* ===================== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+/* ===================== */
+/* Base Modal Styling */
+/* ===================== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  background: rgba(0,0,0,0.5); 
+  justify-content: center;  
+  align-items: center;      
+  z-index: 9999;
+  pointer-events: none;
+}
+.modal.show {
+  display: flex;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: #fff;
+  width: 450px;
+  max-width: 90%;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  padding: 20px 25px;
+  animation: fadeIn 0.3s ease-in-out;
+  position: relative;
+  z-index: 10000;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================== */
+/* Modal Header */
+/* ===================== */
+.modal-header {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #00425a;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+/* ===================== */
+/* Form in Modal (Edit) */
+/* ===================== */
+#editModal label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #016686;
+}
+
+#editModal select,
+#editModal textarea,
+#editModal input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#editModal select:focus,
+#editModal textarea:focus,
+#editModal input[type="text"]:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 4px rgba(52,152,219,0.4);
+}
+
+/* ===================== */
+/* Modal Footer (Buttons) */
+/* ===================== */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-footer button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.btn-cancel { background: #ccc; color: #333; }
+.btn-cancel:hover { background: #b3b3b3; }
+
+.btn-save { background: #3498db; color: white; }
+.btn-save:hover { background: #2980b9; }
+
+.btn-delete { background: #e74c3c; color: white; }
+.btn-delete:hover { background: #c0392b; }
+
+/* ===================== */
+/* Delete Modal Styling */
+/* ===================== */
+#deleteModal .modal-content {
+  text-align: center;
+  padding: 30px 25px;
+}
+#deleteModal .modal-header {
+  font-size: 18px;
+  font-weight: 600;
+  color: #c0392b;
+  border-bottom: none;
+  margin-bottom: 10px;
+}
+#deleteModal p {
+  font-size: 15px;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+/* ===================== */
+/* Sort Button */
+/* ===================== */
+.sort-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  margin-left: 6px;
+  cursor: pointer;
+  color: white;
+}
+.sort-btn:hover { color: #ffd700; }
+
+/* ===================== */
+/* Detail Modal Styling - Professional & Readable */
+/* ===================== */
+#detailModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.55);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+#detailModal.show {
+  display: flex;
+  pointer-events: auto;
+  opacity: 1;
+}
+
+/* Kontainer utama */
+#detailModal .modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+  width: 90%;
+  max-width: 600px;
+  padding: 36px 42px;
+  position: relative;
+  animation: fadeInScale 0.3s ease-out;
+  font-family: 'Segoe UI', 'Inter', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Animasi muncul */
+@keyframes fadeInScale {
+  0% { opacity: 0; transform: scale(0.93); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Judul */
+#detailModal h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #00425a;
+  text-align: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e3e3e3;
+  padding-bottom: 10px;
+}
+
+/* Tombol close (X) */
+#detailModal .close-btn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 22px;
+  color: #777;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+#detailModal .close-btn:hover {
+  color: #111;
+}
+
+/* Isi utama */
+#detailModal .modal-body {
+  max-height: 65vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Scroll bar lembut */
+#detailModal .modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+#detailModal .modal-body::-webkit-scrollbar-thumb {
+  background-color: rgba(90, 90, 90, 0.25);
+  border-radius: 4px;
+}
+
+/* Wrapper isi detail */
+#detailModal .detail-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Setiap baris detail */
+#detailModal .detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f1f1f1;
+}
+#detailModal .detail-label {
+  font-weight: 600;
+  color: #555;
+  flex: 1.2;
+  font-size: 15px;
+}
+#detailModal .detail-value {
+  flex: 2;
+  text-align: right;
+  color: #333;
+  font-size: 15px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Jarak antar bagian */
+#detailModal .section {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Tabel (jika ada) */
+#detailModal .detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+#detailModal .detail-table th,
+#detailModal .detail-table td {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 14px;
+  vertical-align: top;
+}
+#detailModal .detail-table th {
+  color: #555;
+  font-weight: 600;
+  width: 35%;
+  border-bottom: 1px solid #efefef;
+}
+#detailModal .detail-table td {
+  color: #333;
+  border-bottom: 1px solid #efefef;
+}
+
+/* Lampiran file */
+#detailModal .detail-attachment {
+  background: #fafafa;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+  margin-top: 15px;
+}
+#detailModal .detail-attachment a {
+  color: #0077a6;
+  text-decoration: none;
+  font-weight: 500;
+}
+#detailModal .detail-attachment a:hover {
+  text-decoration: underline;
+}
+
+/* Notes section */
+#detail-notes-list {
+  list-style-type: disc;
+  padding-left: 24px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+#detail-notes-list li {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 4px;
+}
+
+/* Tombol Tutup */
+#closeDetailBtn {
+  display: block;
+  margin: 25px auto 0;
+  background-color: #2b8cd6;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: background 0.2s ease;
+}
+#closeDetailBtn:hover {
+  background-color: #1c6fb3;
+}
+
+/* Responsif mobile */
+@media (max-width: 480px) {
+  #detailModal .modal-content {
+    padding: 26px 22px;
+    width: 94%;
+  }
+  #detailModal h2 {
+    font-size: 18px;
+  }
+  #detailModal .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  #detailModal .detail-value {
+    text-align: left;
+  }
+  #closeDetailBtn {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+
+
+/* ===================== */
+/* Dashboard Content */
+/* ===================== */
+.dashboard-main { padding: 2rem; }
+.dashboard-main h2 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #00425a;
+}
+
+/* KPI + Chart */
+.summary-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+.summary-boxes {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.summary-boxes .box {
+  flex: 0 0 150px;
+  padding: 15px;
+  text-align: center;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.summary-boxes .box span.count {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+/* Pie Chart */
+.chart-container {
+  margin-left: auto;
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Trend Chart (Bar) */
+.charttrend-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 600px;
+  height: 300px;
+  margin: 20px auto;
+  padding: 10px;
+}
+.charttrend-container canvas {
+  width: 100% !important;
+  height: 260px !important; 
+}
+.chart-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.chart-controls label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* KPI Box Styling */
+.box {
+  flex: 1;
+  min-width: 150px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+.box:hover { transform: translateY(-3px); }
+.box i { font-size: 24px; margin-bottom: 0.5rem; }
+
+/* Warna Border */
+.box.progress { border-left: 6px solid #ffc107; }
+.box.average { border-left: 6px solid #17a2b8; }
+.box.resolved { border-left: 6px solid #28a745; }
+.box.total { border-left: 6px solid #dc3545; }
+
+/* ===================== */
+/* Table Controls */
+/* ===================== */
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.table-controls .search-bar {
+  padding: 0.5rem 0.75rem;
+  width: 220px;
+  border: 1px solid #bbb;
+  border-radius: 20px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.table-controls .search-bar:focus {
+  border-color: #0077a6;
+  box-shadow: 0 0 5px rgba(0, 119, 166, 0.4);
+  outline: none;
+}
+
+/* Grup kanan */
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Dropdown */
+#entriesSelect {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Export */
+.export-btn {
+  background-color: #1d6f42;
+  color: white;
+  border: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s ease;
+}
+.export-btn:hover { background-color: #14532d; }
+
+/* Add Ticket */
+.add-ticket-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+.add-ticket-btn:hover { background-color: #218838; }
+
+/* ===================== */
+/* Ticket Table */
+/* ===================== */
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+.ticket-table th,
+.ticket-table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: left;
+}
+.ticket-table th {
+  background-color: #0077a6;
+  color: white;
+}
+.ticket-table tr:hover {
+  background-color: #f5faff;
+  cursor: pointer;
+}
+
+/* Action Cell */
+.ticket-table td.action-cell {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  white-space: nowrap;
+}
+.action-cell {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+}
+.action-btn {
+  padding: 6px 12px;
+  margin: 0 2px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.edit-btn { background-color: #008AE3; color: white; }
+.delete-btn { background-color: #FDC800; color: white; }
+
+/* ===================== */
+/* Form Styling */
+/* ===================== */
+.form-group { margin-bottom: 15px; }
+.form-group label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+}
+.form-group select,
+.form-group textarea,
+.form-group input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.form-group select:focus,
+.form-group textarea:focus,
+.form-group input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 3px rgba(52,152,219,0.5);
+}
+
+
+/* Pagination Styling */
+#paginationControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.pagination-wrapper {
+  display: flex;
+  gap: 6px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.pagination-number,
+.pagination-btn {
+  border: none;
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination-number:hover,
+.pagination-btn:hover {
+  background: #007bff;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.pagination-number.active {
+  background: #007bff;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.pagination-btn:disabled {
+  background: #e9ecef;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 600px) {
+  .pagination-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .pagination-number, .pagination-btn {
+    padding: 5px 8px;
+    font-size: 13px;
+  }
+}
